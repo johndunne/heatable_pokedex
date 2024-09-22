@@ -1,7 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
-
-import 'pokemon_item_sprite.dart';
 
 part 'pokemon_item_sprite_artwork.freezed.dart';
 // optional: Since our Person class is serializable, we must add this line.

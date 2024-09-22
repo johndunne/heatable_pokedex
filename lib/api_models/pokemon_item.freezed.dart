@@ -24,6 +24,8 @@ mixin _$PokemonItem {
   double get height => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   PokemonItemSprite? get sprites => throw _privateConstructorUsedError;
+  @JsonKey(name: 'stats')
+  List<PokemonItemStat> get stats => throw _privateConstructorUsedError;
 
   /// Serializes this PokemonItem to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +43,12 @@ abstract class $PokemonItemCopyWith<$Res> {
           PokemonItem value, $Res Function(PokemonItem) then) =
       _$PokemonItemCopyWithImpl<$Res, PokemonItem>;
   @useResult
-  $Res call({int id, double height, String name, PokemonItemSprite? sprites});
+  $Res call(
+      {int id,
+      double height,
+      String name,
+      PokemonItemSprite? sprites,
+      @JsonKey(name: 'stats') List<PokemonItemStat> stats});
 
   $PokemonItemSpriteCopyWith<$Res>? get sprites;
 }
@@ -65,6 +72,7 @@ class _$PokemonItemCopyWithImpl<$Res, $Val extends PokemonItem>
     Object? height = null,
     Object? name = null,
     Object? sprites = freezed,
+    Object? stats = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -83,6 +91,10 @@ class _$PokemonItemCopyWithImpl<$Res, $Val extends PokemonItem>
           ? _value.sprites
           : sprites // ignore: cast_nullable_to_non_nullable
               as PokemonItemSprite?,
+      stats: null == stats
+          ? _value.stats
+          : stats // ignore: cast_nullable_to_non_nullable
+              as List<PokemonItemStat>,
     ) as $Val);
   }
 
@@ -109,7 +121,12 @@ abstract class _$$PokemonItemImplCopyWith<$Res>
       __$$PokemonItemImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, double height, String name, PokemonItemSprite? sprites});
+  $Res call(
+      {int id,
+      double height,
+      String name,
+      PokemonItemSprite? sprites,
+      @JsonKey(name: 'stats') List<PokemonItemStat> stats});
 
   @override
   $PokemonItemSpriteCopyWith<$Res>? get sprites;
@@ -132,6 +149,7 @@ class __$$PokemonItemImplCopyWithImpl<$Res>
     Object? height = null,
     Object? name = null,
     Object? sprites = freezed,
+    Object? stats = null,
   }) {
     return _then(_$PokemonItemImpl(
       id: null == id
@@ -150,6 +168,10 @@ class __$$PokemonItemImplCopyWithImpl<$Res>
           ? _value.sprites
           : sprites // ignore: cast_nullable_to_non_nullable
               as PokemonItemSprite?,
+      stats: null == stats
+          ? _value._stats
+          : stats // ignore: cast_nullable_to_non_nullable
+              as List<PokemonItemStat>,
     ));
   }
 }
@@ -161,7 +183,9 @@ class _$PokemonItemImpl with DiagnosticableTreeMixin implements _PokemonItem {
       {required this.id,
       required this.height,
       required this.name,
-      required this.sprites});
+      required this.sprites,
+      @JsonKey(name: 'stats') required final List<PokemonItemStat> stats})
+      : _stats = stats;
 
   factory _$PokemonItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$PokemonItemImplFromJson(json);
@@ -174,10 +198,18 @@ class _$PokemonItemImpl with DiagnosticableTreeMixin implements _PokemonItem {
   final String name;
   @override
   final PokemonItemSprite? sprites;
+  final List<PokemonItemStat> _stats;
+  @override
+  @JsonKey(name: 'stats')
+  List<PokemonItemStat> get stats {
+    if (_stats is EqualUnmodifiableListView) return _stats;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_stats);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PokemonItem(id: $id, height: $height, name: $name, sprites: $sprites)';
+    return 'PokemonItem(id: $id, height: $height, name: $name, sprites: $sprites, stats: $stats)';
   }
 
   @override
@@ -188,7 +220,8 @@ class _$PokemonItemImpl with DiagnosticableTreeMixin implements _PokemonItem {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('height', height))
       ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('sprites', sprites));
+      ..add(DiagnosticsProperty('sprites', sprites))
+      ..add(DiagnosticsProperty('stats', stats));
   }
 
   @override
@@ -199,12 +232,14 @@ class _$PokemonItemImpl with DiagnosticableTreeMixin implements _PokemonItem {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.height, height) || other.height == height) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.sprites, sprites) || other.sprites == sprites));
+            (identical(other.sprites, sprites) || other.sprites == sprites) &&
+            const DeepCollectionEquality().equals(other._stats, _stats));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, height, name, sprites);
+  int get hashCode => Object.hash(runtimeType, id, height, name, sprites,
+      const DeepCollectionEquality().hash(_stats));
 
   /// Create a copy of PokemonItem
   /// with the given fields replaced by the non-null parameter values.
@@ -224,10 +259,12 @@ class _$PokemonItemImpl with DiagnosticableTreeMixin implements _PokemonItem {
 
 abstract class _PokemonItem implements PokemonItem {
   const factory _PokemonItem(
-      {required final int id,
-      required final double height,
-      required final String name,
-      required final PokemonItemSprite? sprites}) = _$PokemonItemImpl;
+          {required final int id,
+          required final double height,
+          required final String name,
+          required final PokemonItemSprite? sprites,
+          @JsonKey(name: 'stats') required final List<PokemonItemStat> stats}) =
+      _$PokemonItemImpl;
 
   factory _PokemonItem.fromJson(Map<String, dynamic> json) =
       _$PokemonItemImpl.fromJson;
@@ -240,6 +277,9 @@ abstract class _PokemonItem implements PokemonItem {
   String get name;
   @override
   PokemonItemSprite? get sprites;
+  @override
+  @JsonKey(name: 'stats')
+  List<PokemonItemStat> get stats;
 
   /// Create a copy of PokemonItem
   /// with the given fields replaced by the non-null parameter values.

@@ -14,6 +14,9 @@ _$PokemonItemImpl _$$PokemonItemImplFromJson(Map<String, dynamic> json) =>
       sprites: json['sprites'] == null
           ? null
           : PokemonItemSprite.fromJson(json['sprites'] as Map<String, dynamic>),
+      stats: (json['stats'] as List<dynamic>)
+          .map((e) => PokemonItemStat.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$PokemonItemImplToJson(_$PokemonItemImpl instance) =>
@@ -22,4 +25,5 @@ Map<String, dynamic> _$$PokemonItemImplToJson(_$PokemonItemImpl instance) =>
       'height': instance.height,
       'name': instance.name,
       'sprites': instance.sprites,
+      'stats': instance.stats,
     };

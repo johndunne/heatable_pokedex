@@ -154,9 +154,7 @@ class __$$PokemonItemSpriteArtworkImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PokemonItemSpriteArtworkImpl
-    with DiagnosticableTreeMixin
-    implements _PokemonItemSpriteArtwork {
+class _$PokemonItemSpriteArtworkImpl implements _PokemonItemSpriteArtwork {
   const _$PokemonItemSpriteArtworkImpl(
       {@JsonKey(name: 'front_default') required this.frontDefault,
       @JsonKey(name: 'front_female') required this.frontFemale,
@@ -180,19 +178,8 @@ class _$PokemonItemSpriteArtworkImpl
   final String? frontShinyFemale;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'PokemonItemSpriteArtwork(frontDefault: $frontDefault, frontFemale: $frontFemale, frontShiny: $frontShiny, frontShinyFemale: $frontShinyFemale)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'PokemonItemSpriteArtwork'))
-      ..add(DiagnosticsProperty('frontDefault', frontDefault))
-      ..add(DiagnosticsProperty('frontFemale', frontFemale))
-      ..add(DiagnosticsProperty('frontShiny', frontShiny))
-      ..add(DiagnosticsProperty('frontShinyFemale', frontShinyFemale));
   }
 
   @override
