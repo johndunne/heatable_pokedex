@@ -19,3 +19,9 @@ class PokemonItemStat with _$PokemonItemStat {
   => _$PokemonItemStatFromJson(json);
 }
 
+class PokemonStatNameAndValue{
+  final String name;
+  final double value;
+
+  PokemonStatNameAndValue({required this.name, required this.value});
+}

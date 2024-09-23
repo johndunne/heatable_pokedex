@@ -9,8 +9,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:heatable_pokedex/api_models/pokemon_api_search_results.dart';
-import 'package:heatable_pokedex/api_models/pokemon_item.dart';
+import 'package:heatable_pokedex/models/api_response/pokemon_api_search_results.dart';
+import 'package:heatable_pokedex/models/api_response/pokemon_item.dart';
 
 void main() {
   // Build our app and trigger a frame.
@@ -69,6 +69,23 @@ void main() {
     });
     test('test pokemon item HP stats field is parsed and expected value', ()  {
       expect(pokemonItem.stats.first.stat.name, equals("hp"));
+    });
+    test('test pokemon item HP stats enumeration is the expected length', ()  {
+      expect(pokemonItem.enumerateStats.length, equals(6));
+    });
+    test('test pokemon item HP stats enumeration has the expected first entry name', ()  {
+      expect(pokemonItem.enumerateStats.first.name, equals("hp"));
+    });
+    test('test pokemon item HP stats enumeration has the expected first entry value', ()  {
+      expect(pokemonItem.enumerateStats.first.value, equals(39.0));
+    });
+    test('test pokemon item base experience is the expected value', ()  {
+      expect(pokemonItem.baseExperience, equals(62.0));
+    });
+    test('test pokemon item types enumerate to the expected value', ()  {
+      final pokemensTypes = pokemonItem.enumerateTypes;
+      expect(pokemensTypes.length, equals(1));
+      expect(pokemensTypes.first, equals("fire"));
     });
   });
 }

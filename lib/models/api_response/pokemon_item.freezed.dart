@@ -24,8 +24,12 @@ mixin _$PokemonItem {
   double get height => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   PokemonItemSprite? get sprites => throw _privateConstructorUsedError;
+  double get weight => throw _privateConstructorUsedError;
   @JsonKey(name: 'stats')
   List<PokemonItemStat> get stats => throw _privateConstructorUsedError;
+  @JsonKey(name: 'base_experience')
+  double get baseExperience => throw _privateConstructorUsedError;
+  List<PokemonItemType> get types => throw _privateConstructorUsedError;
 
   /// Serializes this PokemonItem to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,7 +52,10 @@ abstract class $PokemonItemCopyWith<$Res> {
       double height,
       String name,
       PokemonItemSprite? sprites,
-      @JsonKey(name: 'stats') List<PokemonItemStat> stats});
+      double weight,
+      @JsonKey(name: 'stats') List<PokemonItemStat> stats,
+      @JsonKey(name: 'base_experience') double baseExperience,
+      List<PokemonItemType> types});
 
   $PokemonItemSpriteCopyWith<$Res>? get sprites;
 }
@@ -72,7 +79,10 @@ class _$PokemonItemCopyWithImpl<$Res, $Val extends PokemonItem>
     Object? height = null,
     Object? name = null,
     Object? sprites = freezed,
+    Object? weight = null,
     Object? stats = null,
+    Object? baseExperience = null,
+    Object? types = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -91,10 +101,22 @@ class _$PokemonItemCopyWithImpl<$Res, $Val extends PokemonItem>
           ? _value.sprites
           : sprites // ignore: cast_nullable_to_non_nullable
               as PokemonItemSprite?,
+      weight: null == weight
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as double,
       stats: null == stats
           ? _value.stats
           : stats // ignore: cast_nullable_to_non_nullable
               as List<PokemonItemStat>,
+      baseExperience: null == baseExperience
+          ? _value.baseExperience
+          : baseExperience // ignore: cast_nullable_to_non_nullable
+              as double,
+      types: null == types
+          ? _value.types
+          : types // ignore: cast_nullable_to_non_nullable
+              as List<PokemonItemType>,
     ) as $Val);
   }
 
@@ -126,7 +148,10 @@ abstract class _$$PokemonItemImplCopyWith<$Res>
       double height,
       String name,
       PokemonItemSprite? sprites,
-      @JsonKey(name: 'stats') List<PokemonItemStat> stats});
+      double weight,
+      @JsonKey(name: 'stats') List<PokemonItemStat> stats,
+      @JsonKey(name: 'base_experience') double baseExperience,
+      List<PokemonItemType> types});
 
   @override
   $PokemonItemSpriteCopyWith<$Res>? get sprites;
@@ -149,7 +174,10 @@ class __$$PokemonItemImplCopyWithImpl<$Res>
     Object? height = null,
     Object? name = null,
     Object? sprites = freezed,
+    Object? weight = null,
     Object? stats = null,
+    Object? baseExperience = null,
+    Object? types = null,
   }) {
     return _then(_$PokemonItemImpl(
       id: null == id
@@ -168,10 +196,22 @@ class __$$PokemonItemImplCopyWithImpl<$Res>
           ? _value.sprites
           : sprites // ignore: cast_nullable_to_non_nullable
               as PokemonItemSprite?,
+      weight: null == weight
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as double,
       stats: null == stats
           ? _value._stats
           : stats // ignore: cast_nullable_to_non_nullable
               as List<PokemonItemStat>,
+      baseExperience: null == baseExperience
+          ? _value.baseExperience
+          : baseExperience // ignore: cast_nullable_to_non_nullable
+              as double,
+      types: null == types
+          ? _value._types
+          : types // ignore: cast_nullable_to_non_nullable
+              as List<PokemonItemType>,
     ));
   }
 }
@@ -184,8 +224,12 @@ class _$PokemonItemImpl with DiagnosticableTreeMixin implements _PokemonItem {
       required this.height,
       required this.name,
       required this.sprites,
-      @JsonKey(name: 'stats') required final List<PokemonItemStat> stats})
-      : _stats = stats;
+      required this.weight,
+      @JsonKey(name: 'stats') required final List<PokemonItemStat> stats,
+      @JsonKey(name: 'base_experience') required this.baseExperience,
+      required final List<PokemonItemType> types})
+      : _stats = stats,
+        _types = types;
 
   factory _$PokemonItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$PokemonItemImplFromJson(json);
@@ -198,6 +242,8 @@ class _$PokemonItemImpl with DiagnosticableTreeMixin implements _PokemonItem {
   final String name;
   @override
   final PokemonItemSprite? sprites;
+  @override
+  final double weight;
   final List<PokemonItemStat> _stats;
   @override
   @JsonKey(name: 'stats')
@@ -208,8 +254,19 @@ class _$PokemonItemImpl with DiagnosticableTreeMixin implements _PokemonItem {
   }
 
   @override
+  @JsonKey(name: 'base_experience')
+  final double baseExperience;
+  final List<PokemonItemType> _types;
+  @override
+  List<PokemonItemType> get types {
+    if (_types is EqualUnmodifiableListView) return _types;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_types);
+  }
+
+  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PokemonItem(id: $id, height: $height, name: $name, sprites: $sprites, stats: $stats)';
+    return 'PokemonItem(id: $id, height: $height, name: $name, sprites: $sprites, weight: $weight, stats: $stats, baseExperience: $baseExperience, types: $types)';
   }
 
   @override
@@ -221,7 +278,10 @@ class _$PokemonItemImpl with DiagnosticableTreeMixin implements _PokemonItem {
       ..add(DiagnosticsProperty('height', height))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('sprites', sprites))
-      ..add(DiagnosticsProperty('stats', stats));
+      ..add(DiagnosticsProperty('weight', weight))
+      ..add(DiagnosticsProperty('stats', stats))
+      ..add(DiagnosticsProperty('baseExperience', baseExperience))
+      ..add(DiagnosticsProperty('types', types));
   }
 
   @override
@@ -233,13 +293,25 @@ class _$PokemonItemImpl with DiagnosticableTreeMixin implements _PokemonItem {
             (identical(other.height, height) || other.height == height) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.sprites, sprites) || other.sprites == sprites) &&
-            const DeepCollectionEquality().equals(other._stats, _stats));
+            (identical(other.weight, weight) || other.weight == weight) &&
+            const DeepCollectionEquality().equals(other._stats, _stats) &&
+            (identical(other.baseExperience, baseExperience) ||
+                other.baseExperience == baseExperience) &&
+            const DeepCollectionEquality().equals(other._types, _types));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, height, name, sprites,
-      const DeepCollectionEquality().hash(_stats));
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      height,
+      name,
+      sprites,
+      weight,
+      const DeepCollectionEquality().hash(_stats),
+      baseExperience,
+      const DeepCollectionEquality().hash(_types));
 
   /// Create a copy of PokemonItem
   /// with the given fields replaced by the non-null parameter values.
@@ -259,12 +331,14 @@ class _$PokemonItemImpl with DiagnosticableTreeMixin implements _PokemonItem {
 
 abstract class _PokemonItem implements PokemonItem {
   const factory _PokemonItem(
-          {required final int id,
-          required final double height,
-          required final String name,
-          required final PokemonItemSprite? sprites,
-          @JsonKey(name: 'stats') required final List<PokemonItemStat> stats}) =
-      _$PokemonItemImpl;
+      {required final int id,
+      required final double height,
+      required final String name,
+      required final PokemonItemSprite? sprites,
+      required final double weight,
+      @JsonKey(name: 'stats') required final List<PokemonItemStat> stats,
+      @JsonKey(name: 'base_experience') required final double baseExperience,
+      required final List<PokemonItemType> types}) = _$PokemonItemImpl;
 
   factory _PokemonItem.fromJson(Map<String, dynamic> json) =
       _$PokemonItemImpl.fromJson;
@@ -278,8 +352,15 @@ abstract class _PokemonItem implements PokemonItem {
   @override
   PokemonItemSprite? get sprites;
   @override
+  double get weight;
+  @override
   @JsonKey(name: 'stats')
   List<PokemonItemStat> get stats;
+  @override
+  @JsonKey(name: 'base_experience')
+  double get baseExperience;
+  @override
+  List<PokemonItemType> get types;
 
   /// Create a copy of PokemonItem
   /// with the given fields replaced by the non-null parameter values.
