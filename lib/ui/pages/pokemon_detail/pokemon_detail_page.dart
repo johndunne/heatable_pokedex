@@ -22,7 +22,7 @@ class PokemonDetailPage extends StatelessWidget {
           child: Center(
             child: Container(
               height: MediaQuery.of(context).size.height * 0.6,
-              width: MediaQuery.of(context).size.height * 0.75,
+              width: MediaQuery.of(context).size.height * 0.85,
               padding: const EdgeInsets.all(8.0),
               child: Material(
                 color: Colors.white10,
