@@ -8,3 +8,5 @@ const kPokemonItemDetailImageHeight = 210.0;
 const kMaxStatsCountSummaryCard = 3;
 
 const kPlaceholderContainerColor = Color(0xCFCCCCFF);
+
+const kCircularProgressBoxSize = 20.0;

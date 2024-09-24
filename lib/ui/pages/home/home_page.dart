@@ -75,17 +75,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   prefixIcon: const Icon(Icons.search),
                   prefixIconColor: Colors.black,
                 ),)),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                  child: Consumer(
-                    builder: (context, ref, child) {
-                      final query = ref.watch(queryProvider);
-                      return ElevatedButton(onPressed: (){
-
-                      }, child: const Text("Search"));
-                    },
-                  ),
-                )
               ],
             ),
           ),

@@ -17,9 +17,12 @@ class PokemonItemSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(PageRouteBuilder<void>( barrierDismissible: true, opaque: false, pageBuilder: (_,__,___) {
-          return PokemonDetailPage(itemSummary: itemSummary);
-        }));
+        Navigator.of(context).push(PageRouteBuilder<void>(
+            barrierDismissible: true,
+            opaque: false,
+            pageBuilder: (_, __, ___) {
+              return PokemonDetailPage(itemSummary: itemSummary);
+            }));
       },
       child: Card(
           child: Padding(
@@ -73,8 +76,8 @@ class PokemonItemSummaryCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        buildStatsColumn(context, label: "Height", value:  pokemonItem.height.toStringAsFixed(0)),
-                        buildStatsColumn(context, label: "Weight", value:  pokemonItem.weight.toStringAsFixed(0)),
+                        buildStatsColumn(context, label: "Height", value: pokemonItem.height.toStringAsFixed(0)),
+                        buildStatsColumn(context, label: "Weight", value: pokemonItem.weight.toStringAsFixed(0)),
                       ],
                     ),
                     Row(
@@ -115,27 +118,27 @@ class PokemonItemSummaryCard extends StatelessWidget {
       );
 
   Widget buildStatsColumn(BuildContext context, {required String label, required String value}) => Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                value,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                label,
-                                style: Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                        ],
-                      );
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                value,
+                style: Theme.of(context).textTheme.titleMedium,
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                label,
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        ],
+      );
 
   Widget buildPokemonHeroAvatar(PokemonItem pokemonItem) => Hero(
         tag: 'hero_${itemSummary.name}',
@@ -148,7 +151,7 @@ class PokemonItemSummaryCard extends StatelessWidget {
           imageUrl: pokemonItem.artworkUrl ?? '',
           placeholder: (context, url) => const Padding(
             padding: EdgeInsets.all(8.0),
-            child: CircularProgressIndicator.adaptive(),
+            child: SizedBox(width: kCircularProgressBoxSize, height: kCircularProgressBoxSize, child: CircularProgressIndicator.adaptive()),
           ),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),

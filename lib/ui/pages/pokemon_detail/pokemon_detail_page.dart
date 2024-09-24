@@ -66,7 +66,7 @@ class PokemonDetailPage extends StatelessWidget {
                                                             imageUrl: pokemonActivity.value?.artworkUrl ?? '',
                                                             placeholder: (context, url) => const Padding(
                                                               padding: EdgeInsets.all(8.0),
-                                                              child: CircularProgressIndicator.adaptive(),
+                                                              child: SizedBox(width: kCircularProgressBoxSize, height: kCircularProgressBoxSize, child: CircularProgressIndicator.adaptive()),
                                                             ),
                                                             errorWidget: (context, url, error) => const Icon(Icons.error),
                                                           ),
@@ -119,7 +119,7 @@ class PokemonDetailPage extends StatelessWidget {
                                     return const Icon(Icons.error);
                                   },
                                   loading: () {
-                                    return const CircularProgressIndicator.adaptive();
+                                    return const SizedBox(width: kCircularProgressBoxSize, height: kCircularProgressBoxSize, child: CircularProgressIndicator.adaptive());
                                   },
                                 );
                               },

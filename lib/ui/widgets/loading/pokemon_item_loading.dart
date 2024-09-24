@@ -18,7 +18,7 @@ class PokemonItemLoadingCard extends StatelessWidget {
       height: kPokemonItemCardHeight,
       child: Row(
         children: [
-          const SizedBox(width: kPokemonItemCardHeight, child: CircularProgressIndicator.adaptive()),
+          const SizedBox(width: kPokemonItemCardHeight, child: SizedBox(width: kCircularProgressBoxSize, height: kCircularProgressBoxSize, child: CircularProgressIndicator.adaptive())),
           Expanded(
               child: Column(
             children: [
