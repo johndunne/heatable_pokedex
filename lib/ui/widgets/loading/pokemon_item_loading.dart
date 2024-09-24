@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:heatable_pokedex/config/consts.dart';
-import 'package:heatable_pokedex/ui/widgets/loading/shimmer_loading.dart';
 
 class PokemonItemLoadingCard extends StatelessWidget {
   final bool drawCard;
@@ -19,20 +18,18 @@ class PokemonItemLoadingCard extends StatelessWidget {
       height: kPokemonItemCardHeight,
       child: Row(
         children: [
-          const SizedBox(width: kPokemonItemCardHeight, child: ShimmerLoading(child: AspectRatio(aspectRatio: 1.0,child: SizedBox(width: 50,height: 50,),))),
+          const SizedBox(width: kPokemonItemCardHeight, child: CircularProgressIndicator.adaptive()),
           Expanded(
               child: Column(
             children: [
-              Row(
+               Row(
                 children: [
                   Expanded(
                     child: SizedBox(
                       height: 40,
-                      child: ShimmerLoading(
-                        child: Text(
-                          "Pokemon name",
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(color: kPlaceholderContainerColor),
                       ),
                     ),
                   ),
@@ -43,30 +40,10 @@ class PokemonItemLoadingCard extends StatelessWidget {
                   children: [
                     for (int i = 0; i < kMaxStatsCountSummaryCard; i++)
                       Expanded(
-                          child: ShimmerLoading(
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "-",
-                                  style: Theme.of(context).textTheme.titleMedium,
-                                )
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Stat",
-                                  style: Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      )),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(color: kPlaceholderContainerColor,),
+                          )),
                   ],
                 ),
               )

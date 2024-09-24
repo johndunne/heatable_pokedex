@@ -7,7 +7,6 @@ import 'package:heatable_pokedex/models/api_response/pokemon_api_result_summary.
 import 'package:heatable_pokedex/models/api_response/pokemon_item.dart';
 import 'package:heatable_pokedex/ui/pages/pokemon_detail/pokemon_detail_page.dart';
 import 'package:heatable_pokedex/ui/widgets/loading/pokemon_item_loading.dart';
-import 'package:heatable_pokedex/ui/widgets/loading/shimmer_loading.dart';
 
 class PokemonItemSummaryCard extends StatelessWidget {
   final PokemonApiResultSummary itemSummary;
@@ -18,7 +17,7 @@ class PokemonItemSummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute<void>(builder: (context) {
+        Navigator.of(context).push(PageRouteBuilder<void>( barrierDismissible: true, opaque: false, pageBuilder: (_,__,___) {
           return PokemonDetailPage(itemSummary: itemSummary);
         }));
       },
@@ -35,7 +34,7 @@ class PokemonItemSummaryCard extends StatelessWidget {
                   return buildPokemonItemCard(context, pokemonItem: data);
                 },
                 error: (error, stackTrace) {
-                  debugPrint('${error}');
+                  debugPrint('pokemonActivity error [$error]');
                   return const Icon(Icons.error);
                 },
                 loading: () {
@@ -69,33 +68,44 @@ class PokemonItemSummaryCard extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Row(
+                child: Column(
                   children: [
-                    ...pokemonItem.enumerateStats.take(kMaxStatsCountSummaryCard).map(
-                          (e) => Expanded(
-                              child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        buildStatsColumn(context, label: "Height", value:  pokemonItem.height.toStringAsFixed(0)),
+                        buildStatsColumn(context, label: "Weight", value:  pokemonItem.weight.toStringAsFixed(0)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        ...pokemonItem.enumerateStats.take(kMaxStatsCountSummaryCard).map(
+                              (e) => Expanded(
+                                  child: Column(
                                 children: [
-                                  Text(
-                                    e.value.toStringAsFixed(0),
-                                    style: Theme.of(context).textTheme.titleMedium,
-                                  )
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        e.value.toStringAsFixed(0),
+                                        style: Theme.of(context).textTheme.titleMedium,
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        e.name,
+                                        style: Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  ),
                                 ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    e.name,
-                                    style: Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              ),
-                            ],
-                          )),
-                        )
+                              )),
+                            )
+                      ],
+                    ),
                   ],
                 ),
               )
@@ -103,6 +113,29 @@ class PokemonItemSummaryCard extends StatelessWidget {
           )),
         ],
       );
+
+  Widget buildStatsColumn(BuildContext context, {required String label, required String value}) => Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                value,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              )
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                label,
+                                style: Theme.of(context).textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                        ],
+                      );
 
   Widget buildPokemonHeroAvatar(PokemonItem pokemonItem) => Hero(
         tag: 'hero_${itemSummary.name}',
@@ -113,8 +146,9 @@ class PokemonItemSummaryCard extends StatelessWidget {
         aspectRatio: 1.0,
         child: CachedNetworkImage(
           imageUrl: pokemonItem.artworkUrl ?? '',
-          placeholder: (context, url) => ShimmerLoading(
-            child: Container(),
+          placeholder: (context, url) => const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: CircularProgressIndicator.adaptive(),
           ),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),

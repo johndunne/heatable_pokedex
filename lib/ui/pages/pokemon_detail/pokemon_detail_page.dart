@@ -12,110 +12,139 @@ class PokemonDetailPage extends StatelessWidget {
   const PokemonDetailPage({super.key, required this.itemSummary});
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-          body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: Consumer(
-                  builder: (context, ref, child) {
-                    final AsyncValue<PokemonItem> pokemonActivity = ref.watch(fetchPokemonItemProvider(itemSummary.url));
-                    return pokemonActivity.when(
-                      data: (data) {
-                        return Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: kPokemonItemDetailImageHeight,
-                                  child: Hero(
-                                    tag: 'hero_${itemSummary.name}',
-                                    child: AspectRatio(
-                                      aspectRatio: 1.0,
-                                      child: CachedNetworkImage(
-                                        imageUrl: pokemonActivity.value?.artworkUrl ?? '',
-                                        placeholder: (context, url) => const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: CircularProgressIndicator.adaptive(),
-                                        ),
-                                        errorWidget: (context, url, error) => const Icon(Icons.error),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                    child: Text(
-                                  itemSummary.name,
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                  textAlign: TextAlign.center,
-                                ))
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
-                              child: Row(
-                                children: [
-                                  Expanded(child: buildLabelAndValueColumn(context, label: "Weight", value: data.weight.toStringAsFixed(0))),
-                                  Expanded(child: buildLabelAndValueColumn(context, label: "Height", value: data.height.toStringAsFixed(0))),
-                                  Expanded(child: buildLabelAndValueColumn(context, label: "Base xp", value: data.baseExperience.toStringAsFixed(0))),
-                                ],
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Base Stats',
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                )
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
-                              child: buildBaseStatsRow(context, pokemonItem: data),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  'Abilities',
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                )
-                              ],
-                            )
-                          ],
-                        );
-                      },
-                      error: (error, stackTrace) {
-                        debugPrint('${error}');
-                        return const Icon(Icons.error);
-                      },
-                      loading: () {
-                        return const CircularProgressIndicator.adaptive();
-                      },
-                    );
+  Widget build(BuildContext context) => GestureDetector(
+    onTap: (){
+      Navigator.of(context).pop();
+    },
+    child: Container(
+          color: Colors.grey.withOpacity(0.5),
+          padding: const EdgeInsets.all(16.0),
+          child: Center(
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.6,
+              width: MediaQuery.of(context).size.height * 0.75,
+              padding: const EdgeInsets.all(8.0),
+              child: Material(
+                color: Colors.white10,
+                child: GestureDetector(
+                  onTap:(){
+                    // prevent taps on the card from dismissing the detail page
                   },
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Consumer(
+                              builder: (context, ref, child) {
+                                final AsyncValue<PokemonItem> pokemonActivity = ref.watch(fetchPokemonItemProvider(itemSummary.url));
+                                return pokemonActivity.when(
+                                  data: (data) {
+                                    return Column(
+                                      children: [
+                                        Stack(
+                                          children: [
+                                            Positioned(
+                                              child: Text(
+                                                "# ${pokemonActivity.value?.id ?? "-"}",
+                                                style: Theme.of(context).textTheme.displayLarge?.copyWith(color: Colors.grey),
+                                              ),
+                                            ),
+                                            Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    SizedBox(
+                                                      height: kPokemonItemDetailImageHeight,
+                                                      child: Hero(
+                                                        tag: 'hero_${itemSummary.name}',
+                                                        child: AspectRatio(
+                                                          aspectRatio: 1.0,
+                                                          child: CachedNetworkImage(
+                                                            imageUrl: pokemonActivity.value?.artworkUrl ?? '',
+                                                            placeholder: (context, url) => const Padding(
+                                                              padding: EdgeInsets.all(8.0),
+                                                              child: CircularProgressIndicator.adaptive(),
+                                                            ),
+                                                            errorWidget: (context, url, error) => const Icon(Icons.error),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                                child: Text(
+                                              itemSummary.name,
+                                              style: Theme.of(context).textTheme.titleLarge,
+                                              textAlign: TextAlign.center,
+                                            ))
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+                                          child: Row(
+                                            children: [
+                                              Expanded(child: buildLabelAndValueColumn(context, label: "Weight", value: data.weight.toStringAsFixed(0))),
+                                              Expanded(child: buildLabelAndValueColumn(context, label: "Height", value: data.height.toStringAsFixed(0))),
+                                              Expanded(child: buildLabelAndValueColumn(context, label: "Base xp", value: data.baseExperience.toStringAsFixed(0))),
+                                            ],
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Base Stats',
+                                              style: Theme.of(context).textTheme.titleLarge,
+                                            )
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+                                          child: buildBaseStatsRow(context, pokemonItem: data),
+                                        )
+                                      ],
+                                    );
+                                  },
+                                  error: (error, stackTrace) {
+                                    debugPrint('${error}');
+                                    return const Icon(Icons.error);
+                                  },
+                                  loading: () {
+                                    return const CircularProgressIndicator.adaptive();
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('Close'))
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text('Close'))
-                ],
-              )
-            ],
+            ),
           ),
         ),
-      ));
+  );
 
   Widget buildBaseStatsRow(BuildContext context, {required PokemonItem pokemonItem}) => SizedBox(
         height: 70,
@@ -179,7 +208,7 @@ class PokemonDetailPage extends StatelessWidget {
           children: [
             Text(
               label,
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             )
           ],
